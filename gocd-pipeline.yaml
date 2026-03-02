@@ -1,25 +1,21 @@
-tasks:
-  - exec:
-      command: bash
-      arguments:
-        - -c
-        - "ls && cat app.txt"format_version: 10
+format_version: 10
 
 pipelines:
-  github-demo:
-    group: demo-group
+  github-ui-pipeline:
+    group: defaultGroup
+
     materials:
-      my-git:
+      mygit:
         git: https://github.com/Rahul-3043/Go_Cd_Pipeline.git
         branch: main
+
     stages:
       - build:
           jobs:
             build-job:
               tasks:
                 - exec:
-                    command: ls
-                - exec:
-                    command: cat
+                    command: bash
                     arguments:
-                      - app.txt
+                      - -c
+                      - "ls && echo '--- File Content ---' && cat app.txt"
