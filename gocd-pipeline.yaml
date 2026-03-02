@@ -1,0 +1,20 @@
+format_version: 10
+
+pipelines:
+  github-demo:
+    group: demo-group
+    materials:
+      my-git:
+        git: https://github.com/Rahul-3043/Go_Cd_Pipeline.git
+        branch: main
+    stages:
+      - build:
+          jobs:
+            build-job:
+              tasks:
+                - exec:
+                    command: ls
+                - exec:
+                    command: cat
+                    arguments:
+                      - app.txt
