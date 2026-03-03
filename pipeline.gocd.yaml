@@ -2,33 +2,19 @@ format_version: 10
 
 pipelines:
 
-  full-ci-pipeline:
-    group: defaultGroup
-    materials:
-      mygit:
-        git: https://github.com/Rahul-3043/Go_Cd_Pipeline.git
-        branch: main
-    stages:
-      - build:
-          jobs:
-            build-job:
-              tasks:
-                - exec:
-                    command: bash
-                    arguments:
-                      - -c
-                      - "ls && cat app.txt"
-
   python-pipeline:
     group: defaultGroup
+
     materials:
       mygit:
         git: https://github.com/Rahul-3043/Go_Cd_Pipeline.git
         branch: main
+
     stages:
-      - python-build:
+
+      - build:
           jobs:
-            python-job:
+            python-build-job:
               resources:
                 - python
               tasks:
@@ -37,7 +23,21 @@ pipelines:
                     arguments:
                       - -c
                       - |
-                        echo "===== PYTHON PIPELINE ====="
+                        echo "===== BUILD STAGE ====="
                         python --version
-                        echo "print('Hello from Python Agent')" > test.py
-                        python test.py
+                        echo "print('Hello from Python Agent')" > app.py
+
+      - test:
+          jobs:
+            python-test-job:
+              resources:
+                - python
+              tasks:
+                - exec:
+                    command: bash
+                    arguments:
+                      - -c
+                      - |
+                        echo "===== TEST STAGE ====="
+                        python app.py
+                        echo "Test Successful"
