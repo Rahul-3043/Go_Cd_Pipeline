@@ -1,29 +1,14 @@
 format_version: 10
 
 pipelines:
-  github-ui-pipeline:
+  full-ci-pipeline:
     group: defaultGroup
-    materials:
-      mygit:
-        git: https://github.com/Rahul-3043/Go_Cd_Pipeline.git
-        branch: main
-    stages:
-      - build:
-          jobs:
-            build-job:
-              tasks:
-                - exec:
-                    command: bash
-                    arguments:
-                      - -c
-                      - "ls && cat app.txt"
 
-  complex-pipeline:
-    group: defaultGroup
     materials:
       mygit:
         git: https://github.com/Rahul-3043/Go_Cd_Pipeline.git
         branch: main
+
     stages:
       - build:
           jobs:
@@ -35,8 +20,7 @@ pipelines:
                       - -c
                       - |
                         echo "===== BUILD STAGE ====="
-                        echo "Simulating build..."
-                        sleep 2
+                        ls
                         echo "Build completed"
 
       - test:
@@ -55,16 +39,3 @@ pipelines:
                           echo "Test Failed"
                           exit 1
                         fi
-
-      - package:
-          jobs:
-            package-job:
-              tasks:
-                - exec:
-                    command: bash
-                    arguments:
-                      - -c
-                      - |
-                        echo "===== PACKAGE STAGE ====="
-                        tar -czf app.tar.gz app.txt
-                        echo "Artifact created"
